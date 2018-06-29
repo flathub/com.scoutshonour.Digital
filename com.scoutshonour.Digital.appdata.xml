@@ -1,19 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application>
-  <id type="desktop">com.scoutshonour.Digital.desktop</id>
+<component type="desktop-application">
+  <id>com.scoutshonour.Digital</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>CC-BY-NC-SA-3.0</project_license>
   <name>Digital: A Love Story</name>
-  <developer_name>Christine Love</developer_name>
-  <summary>A computer mystery/romance set five minutes into the future of 1988.</summary>
+  <summary>A computer mystery/romance set five minutes into the future of 1988</summary>
+
+  <description>
+    <p>
+      A computer mystery/romance set five minutes into the future of 1988.
+    </p>
+    <p>
+      I can guarantee at least ONE of the following is a real feature:
+    </p>
+    <ul>
+      <li>Discover a vast conspiracy lurking on the internet!</li>
+      <li>Save the world by exploiting a buffer overflow!</li>
+      <li>Get away with telephone fraud!</li>
+      <li>HACK THE GIBSON!</li>
+    </ul>
+    <p>
+      Which one? You'll have to dial in and see. Welcome to the 20th century.
+    </p>
+    <p>
+      A pre-NaNoRenO release. Digital is released under a Creative Commons license. February 2010, by Christine Love.
+    </p>
+  </description>
+
+​  <launchable type="desktop-id">com.scoutshonour.Digital.desktop</launchable>
+
   <categories>
     <category>Game</category>
     <category>AdventureGame</category>
   </categories>
-  <metadata_license>CC0-1.0</metadata_license>
-  <project_license>CC-BY-NC-SA-3.0</project_license>
-  <url type="homepage">http://scoutshonour.com/digital/</url>
+
   <screenshots>
     <screenshot type="default">
       <image type="source">http://scoutshonour.com/digital/full.png</image>
     </screenshot>
   </screenshots>
-</application>
+
+  <url type="homepage">http://scoutshonour.com/digital/</url>
+  <developer_name>Christine Love</developer_name>
+</component>
