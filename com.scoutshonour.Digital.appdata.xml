@@ -40,6 +40,11 @@
     </screenshot>
   </screenshots>
 
+  <content_rating type="oars-1.1">
+    <content_attribute id="sex-homosexuality">mild</content_attribute>
+  </content_rating>
+
+
   <url type="homepage">http://scoutshonour.com/digital/</url>
   <developer_name>Christine Love</developer_name>
 </component>
