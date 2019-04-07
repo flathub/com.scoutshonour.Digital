@@ -10,10 +10,6 @@ finish-args:
   - --socket=pulseaudio
   - --filesystem=~/.renpy:create
 
-build-options:
-  - env:
-    - PREFIX": /app
-
 modules:
   - name: digital
     buildsystem: simple
