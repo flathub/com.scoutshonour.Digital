@@ -41,10 +41,31 @@
   </screenshots>
 
   <content_rating type="oars-1.1">
+    <content_attribute id="violence-bloodshed">mild</content_attribute>
     <content_attribute id="sex-homosexuality">mild</content_attribute>
+    <content_attribute id="language-humor">mild</content_attribute>
   </content_rating>
+
 
 
   <url type="homepage">http://scoutshonour.com/digital/</url>
   <developer_name>Christine Love</developer_name>
+
+  <releases>
+    <release version="1.1" date="2010-02-28">
+      <artifacts>
+          <artifact type="binary" platform="i386-linux-gnu">
+            <location>http://www.scoutshonour.com/lilyofthevalley/digital-1.1.tar.bz2</location>
+            <checksum type="sha256">e84f5245ca5b348fad3a25b272d55b839a6348501d3e876290c23f8ad4ff0201</checksum>
+            <size type="download">36981254</size>
+          </artifact>
+          <artifact type="binary" platform="win32">
+            <location>http://www.scoutshonour.com/lilyofthevalley/digital-1.1.exe</location>
+            <checksum type="sha256">a94c4482d7138800f96b6d6358afdbc1a12e60b80d0a35a0213a9fb73fdb1f5d</checksum>
+            <size type="download">35890680</size>
+          </artifact>
+        </artifacts>
+    </release>
+  </releases>
+
 </component>
