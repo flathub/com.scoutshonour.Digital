@@ -1,6 +1,6 @@
 app-id: com.scoutshonour.Digital
 runtime: org.freedesktop.Platform
-runtime-version: '18.08'
+runtime-version: '19.08'
 sdk: org.freedesktop.Sdk
 command: Digital.sh
 finish-args:
@@ -8,15 +8,31 @@ finish-args:
   - --share=ipc
   - --device=dri
   - --socket=pulseaudio
+  # Allow ~/.renpy access due to Multi-Game Persistence feature
   - --filesystem=~/.renpy:create
+  # Support 32-bit python
+  - --allow=multiarch
+
+add-extensions:
+  # Support 32-bit python
+  'org.freedesktop.Platform.Compat.i386':
+    directory: 'lib/i386-linux-gnu'
+    version: '19.08'
+
+  'org.freedesktop.Platform.Compat.i386.Debug':
+    directory: 'lib/debug/lib/i386-linux-gnu'
+    version: '19.08'
+    no-autodownload: true
 
 modules:
   - name: digital
     buildsystem: simple
     build-commands:
+      - mkdir -p /app/lib/i386-linux-gnu
+      - install -Dm644 -t /app/etc ld.so.conf
       - cp -R common /app/common
       - cp -R game /app/game
-      - cp -R lib /app/lib
+      - cp -R lib/* /app/lib
       - cp -R renpy /app/renpy
       - install -Dm755 Digital.py /app/Digital.py
       - install -Dm755 Digital-launcher.sh /app/bin/Digital.sh
@@ -37,3 +53,6 @@ modules:
 
       - type: file
         path: com.scoutshonour.Digital.desktop
+
+      - type: file
+        path: ld.so.conf
