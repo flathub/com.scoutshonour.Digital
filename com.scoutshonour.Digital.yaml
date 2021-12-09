@@ -1,6 +1,6 @@
 app-id: com.scoutshonour.Digital
 runtime: org.freedesktop.Platform
-runtime-version: '19.08'
+runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
 command: Digital.sh
 finish-args:
@@ -17,11 +17,11 @@ add-extensions:
   # Support 32-bit python
   'org.freedesktop.Platform.Compat.i386':
     directory: 'lib/i386-linux-gnu'
-    version: '19.08'
+    version: '21.08'
 
   'org.freedesktop.Platform.Compat.i386.Debug':
     directory: 'lib/debug/lib/i386-linux-gnu'
-    version: '19.08'
+    version: '21.08'
     no-autodownload: true
 
 modules:
