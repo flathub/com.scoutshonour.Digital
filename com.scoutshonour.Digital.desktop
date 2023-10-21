@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
-Version=1.1
+Version=1.5
 Name=Digital: A Love Story
 Exec=Digital.sh
 Icon=com.scoutshonour.Digital
-Categories=Game;AdventureGame
+Categories=Game;AdventureGame;

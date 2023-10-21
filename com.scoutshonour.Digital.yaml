@@ -1,6 +1,9 @@
 app-id: com.scoutshonour.Digital
 runtime: org.freedesktop.Platform
-runtime-version: '21.08'
+runtime-version: &runtime-version '23.08'
+x-gl-version: &gl-version '1.4'
+x-gl-versions: &gl-versions 23.08;23.08-extra;1.4
+x-gl-merge-dirs: &gl-merge-dirs vulkan/icd.d;glvnd/egl_vendor.d;OpenCL/vendors;lib/dri;lib/d3d;vulkan/explicit_layer.d;vulkan/implicit_layer.d
 sdk: org.freedesktop.Sdk
 command: Digital.sh
 finish-args:
@@ -15,31 +18,63 @@ finish-args:
 
 add-extensions:
   # Support 32-bit python
-  'org.freedesktop.Platform.Compat.i386':
-    directory: 'lib/i386-linux-gnu'
-    version: '21.08'
+  org.freedesktop.Platform.Compat.i386:
+    directory: lib/i386-linux-gnu
+    version: *runtime-version
 
-  'org.freedesktop.Platform.Compat.i386.Debug':
-    directory: 'lib/debug/lib/i386-linux-gnu'
-    version: '21.08'
+  org.freedesktop.Platform.Compat.i386.Debug:
+    directory: lib/debug/lib/i386-linux-gnu
+    version: *runtime-version
     no-autodownload: true
+
+  # Support OpenGL for 32-bits
+  org.freedesktop.Platform.GL32:
+    directory: lib/i386-linux-gnu/GL
+    version: *gl-version
+    versions: *gl-versions
+    subdirectories: true
+    no-autodownload: true
+    autodelete: false
+    add-ld-path: lib
+    merge-dirs: *gl-merge-dirs
+    download-if: active-gl-driver
+    enable-if: active-gl-driver
+    autoprune-unless: active-gl-driver
+
+  org.freedesktop.Platform.GL32.Debug:
+    directory: lib/debug/lib/i386-linux-gnu/GL
+    version: *gl-version
+    versions: *gl-versions
+    subdirectories: true
+    no-autodownload: true
+    merge-dirs: *gl-merge-dirs
+    enable-if: active-gl-driver
+    autoprune-unless: active-gl-driver
 
 modules:
   - name: digital
     buildsystem: simple
     build-commands:
-      - mkdir -p /app/lib/i386-linux-gnu
-      - install -Dm644 -t /app/etc ld.so.conf
-      - cp -R common /app/common
-      - cp -R game /app/game
-      - cp -R lib/* /app/lib
-      - cp -R renpy /app/renpy
-      - install -Dm755 Digital.py /app/Digital.py
-      - install -Dm755 Digital-launcher.sh /app/bin/Digital.sh
-      - install -Dm644 README.html /app/README.html
-      - install -Dm644 com.scoutshonour.Digital.appdata.xml /app/share/appdata/com.scoutshonour.Digital.appdata.xml
-      - install -Dm644 com.scoutshonour.Digital.desktop /app/share/applications/com.scoutshonour.Digital.desktop
-      - install -Dm644 game/icon.png /app/share/icons/hicolor/128x128/apps/com.scoutshonour.Digital.png
+      - mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu
+      - install -Dm644 -t ${FLATPAK_DEST}/etc ld.so.conf
+      - cp -R common ${FLATPAK_DEST}/common
+      - cp -R game ${FLATPAK_DEST}/game
+      - cp -R lib/* ${FLATPAK_DEST}/lib
+      - cp -R renpy ${FLATPAK_DEST}/renpy
+      - install -Dm755 Digital.py ${FLATPAK_DEST}/Digital.py
+      - install -Dm755 Digital-launcher.sh ${FLATPAK_DEST}/bin/Digital.sh
+      - install -Dm644 README.html ${FLATPAK_DEST}/README.html
+      - install -Dm644 com.scoutshonour.Digital.metainfo.xml ${FLATPAK_DEST}/share/metainfo/com.scoutshonour.Digital.metainfo.xml
+      - install -Dm644 com.scoutshonour.Digital.desktop ${FLATPAK_DEST}/share/applications/com.scoutshonour.Digital.desktop
+      # Copied from ChibiTracker flatpak manifest
+      - |
+        ICON_IN='game/icon.png'
+        ICON_OUT='com.scoutshonour.Digital.png'
+        for s in {32,64,128,256,512} ; do
+          SIZE="${s}x${s}"
+          ffmpeg -y -i "${ICON_IN}" -update 1 -s "${SIZE}" -sws_flags neighbor "${ICON_OUT}"
+          install -p -Dm644 "${ICON_OUT}" -t "${FLATPAK_DEST}/share/icons/hicolor/${SIZE}/apps/"
+        done
     sources:
       - type: archive
         url: http://www.scoutshonour.com/lilyofthevalley/digital-1.1.tar.bz2
@@ -49,7 +84,7 @@ modules:
         path: Digital-launcher.sh
 
       - type: file
-        path: com.scoutshonour.Digital.appdata.xml
+        path: com.scoutshonour.Digital.metainfo.xml
 
       - type: file
         path: com.scoutshonour.Digital.desktop
