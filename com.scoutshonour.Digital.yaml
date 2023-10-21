@@ -64,9 +64,17 @@ modules:
       - install -Dm755 Digital.py ${FLATPAK_DEST}/Digital.py
       - install -Dm755 Digital-launcher.sh ${FLATPAK_DEST}/bin/Digital.sh
       - install -Dm644 README.html ${FLATPAK_DEST}/README.html
-      - install -Dm644 com.scoutshonour.Digital.appdata.xml ${FLATPAK_DEST}/share/appdata/com.scoutshonour.Digital.appdata.xml
+      - install -Dm644 com.scoutshonour.Digital.metainfo.xml ${FLATPAK_DEST}/share/metainfo/com.scoutshonour.Digital.metainfo.xml
       - install -Dm644 com.scoutshonour.Digital.desktop ${FLATPAK_DEST}/share/applications/com.scoutshonour.Digital.desktop
-      - install -Dm644 game/icon.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/com.scoutshonour.Digital.png
+      # Copied from ChibiTracker flatpak manifest
+      - |
+        ICON_IN='game/icon.png'
+        ICON_OUT='com.scoutshonour.Digital.png'
+        for s in {32,64,128,256,512} ; do
+          SIZE="${s}x${s}"
+          ffmpeg -y -i "${ICON_IN}" -update 1 -s "${SIZE}" -sws_flags neighbor "${ICON_OUT}"
+          install -p -Dm644 "${ICON_OUT}" -t "${FLATPAK_DEST}/share/icons/hicolor/${SIZE}/apps/"
+        done
     sources:
       - type: archive
         url: http://www.scoutshonour.com/lilyofthevalley/digital-1.1.tar.bz2
@@ -76,7 +84,7 @@ modules:
         path: Digital-launcher.sh
 
       - type: file
-        path: com.scoutshonour.Digital.appdata.xml
+        path: com.scoutshonour.Digital.metainfo.xml
 
       - type: file
         path: com.scoutshonour.Digital.desktop
