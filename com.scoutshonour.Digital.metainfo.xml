@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017-2024 Mateus Rodrigues Costa -->
 <component type="desktop-application">
   <id>com.scoutshonour.Digital</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>CC-BY-NC-SA-3.0</project_license>
+
   <name>Digital: A Love Story</name>
   <summary>A computer mystery/romance set five minutes into the future of 1988</summary>
-
   <description>
     <p>
       A computer mystery/romance set five minutes into the future of 1988.
@@ -31,7 +32,7 @@
 
   <screenshots>
     <screenshot type="default">
-      <image type="source">http://scoutshonour.com/digital/full.png</image>
+      <image type="source">https://scoutshonour.com/digital/full.png</image>
     </screenshot>
   </screenshots>
 
@@ -52,9 +53,15 @@
     <content_attribute id="language-humor">mild</content_attribute>
   </content_rating>
 
-  <url type="homepage">http://scoutshonour.com/digital/</url>
+  <branding>
+    <color type="primary" scheme_preference="light">#00a5ff</color>
+    <color type="primary" scheme_preference="dark">#00a5ff</color>
+  </branding>
+
+  <developer id="com.scoutshonour">
+    <name>Christine Love (Love Conquers All Games)</name>
+  </developer>
+
+  <url type="homepage">https://scoutshonour.com/digital/</url>
   <url type="contact">https://loveconquersallgam.es/</url>
-
-  <developer_name>Christine Love</developer_name>
-
 </component>

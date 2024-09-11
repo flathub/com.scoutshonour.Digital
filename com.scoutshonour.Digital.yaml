@@ -1,9 +1,9 @@
 app-id: com.scoutshonour.Digital
 runtime: org.freedesktop.Platform
-runtime-version: &runtime-version '23.08'
+runtime-version: &runtime-version '24.08'
 x-gl-version: &gl-version '1.4'
-x-gl-versions: &gl-versions 23.08;23.08-extra;1.4
-x-gl-merge-dirs: &gl-merge-dirs vulkan/icd.d;glvnd/egl_vendor.d;OpenCL/vendors;lib/dri;lib/d3d;vulkan/explicit_layer.d;vulkan/implicit_layer.d
+x-gl-versions: &gl-versions 24.08;1.4
+x-gl-merge-dirs: &gl-merge-dirs vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;lib/gbm;vulkan/explicit_layer.d;vulkan/implicit_layer.d
 sdk: org.freedesktop.Sdk
 command: Digital.sh
 finish-args:
@@ -51,11 +51,24 @@ add-extensions:
     enable-if: active-gl-driver
     autoprune-unless: active-gl-driver
 
+  org.freedesktop.Platform.VAAPI.Intel.i386:
+    directory: lib/i386-linux-gnu/dri/intel-vaapi-driver
+    version: *runtime-version
+    versions: *runtime-version
+    autodelete: false
+    no-autodownload: true
+    add-ld-path: lib
+    download-if: have-intel-gpu
+    autoprune-unless: have-intel-gpu
+
 modules:
   - name: digital
     buildsystem: simple
     build-commands:
       - mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu
+      - mkdir -p ${FLATPAK_DEST}/lib/debug/lib/i386-linux-gnu
+      - mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu/GL
+      - mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu/dri/intel-vaapi-driver
       - install -Dm644 -t ${FLATPAK_DEST}/etc ld.so.conf
       - cp -R common ${FLATPAK_DEST}/common
       - cp -R game ${FLATPAK_DEST}/game
@@ -79,15 +92,14 @@ modules:
       - type: archive
         url: http://www.scoutshonour.com/lilyofthevalley/digital-1.1.tar.bz2
         sha256: e84f5245ca5b348fad3a25b272d55b839a6348501d3e876290c23f8ad4ff0201
-
       - type: file
         path: Digital-launcher.sh
-
       - type: file
         path: com.scoutshonour.Digital.metainfo.xml
-
       - type: file
         path: com.scoutshonour.Digital.desktop
-
-      - type: file
-        path: ld.so.conf
+      - type: inline
+        dest-filename: ld.so.conf
+        contents: |
+          /app/lib32
+          /app/lib/i386-linux-gnu
