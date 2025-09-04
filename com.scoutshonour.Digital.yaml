@@ -62,21 +62,26 @@ add-extensions:
     autoprune-unless: have-intel-gpu
 
 modules:
+  - name: bundle-setup
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/lib/i386-linux-gnu
+      - mkdir -p /app/lib/debug/lib/i386-linux-gnu
+      - mkdir -p /app/lib/i386-linux-gnu/GL
+      - mkdir -p /app/lib/i386-linux-gnu/dri/intel-vaapi-driver
+      - install -Dm644 ld.so.conf /app/etc/ld.so.conf
+    sources:
+      - type: inline
+        dest-filename: ld.so.conf
+        contents: |
+          /app/lib32
+          /app/lib/i386-linux-gnu
   - name: digital
     buildsystem: simple
     build-commands:
-      - mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu
-      - mkdir -p ${FLATPAK_DEST}/lib/debug/lib/i386-linux-gnu
-      - mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu/GL
-      - mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu/dri/intel-vaapi-driver
-      - install -Dm644 -t ${FLATPAK_DEST}/etc ld.so.conf
-      - cp -R common ${FLATPAK_DEST}/common
-      - cp -R game ${FLATPAK_DEST}/game
-      - cp -R lib/* ${FLATPAK_DEST}/lib
-      - cp -R renpy ${FLATPAK_DEST}/renpy
-      - install -Dm755 Digital.py ${FLATPAK_DEST}/Digital.py
+      - install -d ${FLATPAK_DEST}/digital/
+      - cp -a common game lib renpy Digital.py README.html ${FLATPAK_DEST}/digital/
       - install -Dm755 Digital-launcher.sh ${FLATPAK_DEST}/bin/Digital.sh
-      - install -Dm644 README.html ${FLATPAK_DEST}/README.html
       - install -Dm644 com.scoutshonour.Digital.metainfo.xml ${FLATPAK_DEST}/share/metainfo/com.scoutshonour.Digital.metainfo.xml
       - install -Dm644 com.scoutshonour.Digital.desktop ${FLATPAK_DEST}/share/applications/com.scoutshonour.Digital.desktop
       # Copied from ChibiTracker flatpak manifest
@@ -98,8 +103,3 @@ modules:
         path: com.scoutshonour.Digital.metainfo.xml
       - type: file
         path: com.scoutshonour.Digital.desktop
-      - type: inline
-        dest-filename: ld.so.conf
-        contents: |
-          /app/lib32
-          /app/lib/i386-linux-gnu

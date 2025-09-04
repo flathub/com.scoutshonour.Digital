@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec "/app/lib/python" "-OO" "/app/Digital.py" "$@"
+exec "/app/digital/lib/python" "-OO" "/app/digital/Digital.py" "$@"
