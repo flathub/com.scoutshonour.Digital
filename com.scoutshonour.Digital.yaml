@@ -1,8 +1,8 @@
 app-id: com.scoutshonour.Digital
 runtime: org.freedesktop.Platform
-runtime-version: &runtime-version '24.08'
+runtime-version: &runtime-version '25.08'
 x-gl-version: &gl-version '1.4'
-x-gl-versions: &gl-versions 24.08;1.4
+x-gl-versions: &gl-versions 25.08;1.4
 x-gl-merge-dirs: &gl-merge-dirs vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;lib/gbm;vulkan/explicit_layer.d;vulkan/implicit_layer.d
 sdk: org.freedesktop.Sdk
 command: Digital.sh
@@ -80,10 +80,10 @@ modules:
     buildsystem: simple
     build-commands:
       - install -d ${FLATPAK_DEST}/digital/
-      - cp -a common game lib renpy Digital.py README.html ${FLATPAK_DEST}/digital/
-      - install -Dm755 Digital-launcher.sh ${FLATPAK_DEST}/bin/Digital.sh
-      - install -Dm644 com.scoutshonour.Digital.metainfo.xml ${FLATPAK_DEST}/share/metainfo/com.scoutshonour.Digital.metainfo.xml
-      - install -Dm644 com.scoutshonour.Digital.desktop ${FLATPAK_DEST}/share/applications/com.scoutshonour.Digital.desktop
+      - cp -a common game lib renpy Digital.py README.html "${FLATPAK_DEST}/digital/"
+      - install -Dm755 Digital-launcher.sh "${FLATPAK_DEST}/bin/Digital.sh"
+      - install -Dm644 com.scoutshonour.Digital.metainfo.xml "${FLATPAK_DEST}/share/metainfo/com.scoutshonour.Digital.metainfo.xml"
+      - install -Dm644 com.scoutshonour.Digital.desktop "${FLATPAK_DEST}/share/applications/com.scoutshonour.Digital.desktop"
       # Copied from ChibiTracker flatpak manifest
       - |
         ICON_IN='game/icon.png'
